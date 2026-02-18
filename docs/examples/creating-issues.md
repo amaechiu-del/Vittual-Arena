@@ -122,9 +122,12 @@ You can create issues programmatically using the GitHub REST API:
 ### Using curl
 
 ```bash
+# Set your GitHub token as an environment variable first:
+# export GITHUB_TOKEN="your_token_here"
+
 curl -X POST \
   -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Authorization: Bearer $GITHUB_TOKEN" \
   https://api.github.com/repos/amaechiu-del/Vittual-Arena/issues \
   -d '{
     "title": "[Bug]: Issue title",
@@ -136,13 +139,19 @@ curl -X POST \
 ### Using Python
 
 ```python
+import os
 import requests
 
 def create_github_issue(title, body, labels):
+    # Get token from environment variable
+    token = os.environ.get('GITHUB_TOKEN')
+    if not token:
+        raise ValueError("GITHUB_TOKEN environment variable not set")
+    
     url = "https://api.github.com/repos/amaechiu-del/Vittual-Arena/issues"
     headers = {
         "Accept": "application/vnd.github+json",
-        "Authorization": f"Bearer YOUR_TOKEN"
+        "Authorization": f"Bearer {token}"
     }
     data = {
         "title": title,
@@ -152,7 +161,7 @@ def create_github_issue(title, body, labels):
     response = requests.post(url, headers=headers, json=data)
     return response.json()
 
-# Example usage
+# Example usage (set GITHUB_TOKEN environment variable first)
 create_github_issue(
     title="[Bug]: Example bug",
     body="This is an example bug report",
@@ -165,8 +174,14 @@ create_github_issue(
 ```javascript
 const { Octokit } = require("@octokit/rest");
 
+// Get token from environment variable
+const token = process.env.GITHUB_TOKEN;
+if (!token) {
+  throw new Error("GITHUB_TOKEN environment variable not set");
+}
+
 const octokit = new Octokit({
-  auth: "YOUR_TOKEN"
+  auth: token
 });
 
 async function createIssue(title, body, labels) {
@@ -180,7 +195,7 @@ async function createIssue(title, body, labels) {
   return response.data;
 }
 
-// Example usage
+// Example usage (set GITHUB_TOKEN environment variable first)
 createIssue(
   "[Feature]: Example feature",
   "This is an example feature request",
