@@ -1,1 +1,1 @@
-# Vittual-Arena
+# Vittual-Arena; To use vitual arena like    a stadium to broadcast speeches,users plug in from anywhere in the world to view, the stadium arena are filled with vitual people . people pay to broadcast  and advertise around the arena.The booking for speeches and advertd are done online and on first.
